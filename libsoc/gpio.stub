@@ -1,0 +1,43 @@
+;;;; gpio.sld - libsoc gpio library
+;;
+;; Copyright (c) 2015 Chad Albers  All rights reserved.
+;; BSD-style license: See COPYING file
+
+(c-system-include "pthread.h")
+(c-include "libsoc_gpio.h")
+
+(define-c-type gpo_callback
+  (int callback_fn)
+  (void callback_arg)
+  (pthread_t thread)
+  (int ready))
+
+(define-c-type gpio
+  (unsigned-int gpio)
+  (int value_fd)
+  (pointer gpio_callback)
+  (int shared))
+
+(define-c-int-type gpio-direction)
+(define-c-const gpio-direction (gpio-direction/output OUTPUT))
+(define-c-const gpio-direction (gpio-direction/input INPUT))
+(define-c-const gpio-direction (gpio-direction/error DIRECTION_ERROR))
+
+(define-c-int-type gpio-level)
+(define-c-const gpio-level (gpio-level/high HIGH))
+(define-c-const gpio-level (gpio-level/low LOW))
+(define-c-const gpio-level (gpio-level/error LEVEL_ERROR))
+
+(define-c-int-type gpio-mode)
+(define-c-const gpio-mode (gpio-mode/shared "LS_SHARED"))
+(define-c-const gpio-mode (gpio-mode/greedy "LS_GREEDY"))
+(define-c-const gpio-mode (gpio-mode/weak "LS_WEAK"))
+
+(define-c gpio (gpio-request libsoc_gpio_request) (unsigned-int gpio-direction))
+(define-c int (gpio-free libsoc_gpio_free) ((pointer gpio)))
+
+(define-c int (gpio-direction-set! libsoc_gpio_set_direction) ((pointer gpio) gpio-direction))
+(define-c gpio-direction (gpio-direction-get libsoc_gpio_get_direction) ((pointer gpio)))
+
+(define-c int (gpio-level-set! libsoc_gpio_set_level) ((pointer gpio) gpio-level))
+(define-c gpio-level (gpio-level-get libsoc_gpio_get_level) ((pointer gpio)))
