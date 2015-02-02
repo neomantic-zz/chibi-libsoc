@@ -4,7 +4,7 @@
 ### Added
 - gpio-request, and its modes - (gpio-mode/shared, gpio-mode/greedy, gpio-mode/weak)
 - gpio-free
-- gpio-direction-set!, and its directions (gpio-level/high, gpio-level/low, gpio-level/error)
+- gpio-direction-set!, and its directions (gpio-direction/output, gpio-direction/input, gpio-direction/error)
 - gpio-direction-get
-- gpio-level-set!, and its levels (gpio-direction/output, gpio-direction/input, gpio-direction/error)
+- gpio-level-set!, and its levels (gpio-level/high, gpio-level/low, gpio-level/error)
 - gpio-level-get
