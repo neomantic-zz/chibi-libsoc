@@ -1,16 +1,14 @@
 # chibi-libsoc
 
-A [chibi-scheme](http://synthcode.com/scheme/chibi/) library binding too
+A [chibi-scheme](http://synthcode.com/scheme/chibi/) library binding to
 the [libsoc](https://github.com/jackmitch/libsoc) library.
 
 ## Features
 
 Chibi-libsoc only supports a small set of calls that libsoc actually
-provides. It only supports manipulation of GPIO sockets via libsoc's
-sysfs interface.
+provides. It only supports the manipulation of GPIO sockets via libsoc.
 
 The following calls are provided by chibi-libsoc.
-
 
 ``` scheme
 (gpio-request gpio gpio-mode)
@@ -32,7 +30,7 @@ Request (reserve, or export to sysfs) a gpio.  Possible values:
 ``` scheme
 (gpio-free gpio)
 ```
-Frees the gpio
+Frees the gpio, under the conditions of the gpio-modes described above.
 
 ``` scheme
 (gpio-direction-set! gpio gpio-direction)
@@ -60,15 +58,16 @@ Returns the current level
 
 ## FFI Rational
 
-Managing the gpios on the sysfs are relatively straightforward: an app
-simply needs to echo strings to the correct files.  This is a task
-easily done in plain-ole-scheme, rather than using libsoc. Indeed, the
-so file that `chibi-ffi` produces is substantial larger in bytes-size than
+Managing the gpios via linux's (3.8+) the sysfs is relatively
+straightforward: one needs to echo simply echo the correct strings to
+the correct files.  This is a task easily done in plain-ole-scheme,
+rather than using libsoc. Indeed, the shared object file that
+`chibi-ffi` generates is substantially larger in byte-size than
 simple scheme code.
 
-An alternate motivation guide this project. The purpose was to learn
-and understand the limitations chibi-scheme's FFI interface. While
-relatively simple, it's FFI requires a stub file, and
+However, an alternate motivation guided this project. The purpose was
+to learn and understand the limitations of chibi-scheme's FFI
+interface. While relatively simple, it's FFI requires a stub file, and
 compiliation. Additionally it does not support function pointers. (Had
 it, this library would have included other bindings to libsoc
 functions.)
