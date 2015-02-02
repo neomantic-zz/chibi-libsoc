@@ -30,7 +30,7 @@ Request (reserve, or export to sysfs) a gpio.  Possible values:
 ``` scheme
 (gpio-free gpio)
 ```
-Frees the gpio, under the conditions of the gpio-modes described above.
+Free the gpio, under the conditions of the gpio-modes described above.
 
 ``` scheme
 (gpio-direction-set! gpio gpio-direction)
@@ -43,41 +43,41 @@ Direction values are the following: `gpio-direction/output`,
 ``` scheme
 (gpio-direction-get gpio)
 ```
-Returns current direction
+Return current direction
 
 ``` scheme
 (gpio-level-set! gpio gpio-level)
 ```
-Sets the level of the gpio. Level values ar the following:
+Set the level of the gpio. Level values ar the following:
 `gpio-level/high`, `gpio-level/low`, `gpio-level/error`.
 
 ``` schemes
 (gpio-level-get gpio)
 ```
-Returns the current level
+Return the current level
 
 ## FFI Rational
 
-Managing the gpios via linux's (3.8+) the sysfs is relatively
-straightforward: one needs to echo simply echo the correct strings to
-the correct files.  This is a task easily done in plain-ole-scheme,
-rather than using libsoc. Indeed, the shared object file that
-`chibi-ffi` generates is substantially larger in byte-size than
-simple scheme code.
+Managing the gpios via linux's (3.8+) sysfs userspace interface is
+relatively straightforward: one needs to simply echo the correct
+strings to the correct files.  This is a task easily done in
+plain-ole-scheme, rather than using libsoc. Indeed, the shared object
+file that `chibi-ffi` generates is substantially larger in byte-size
+than simple scheme code.
 
 However, an alternate motivation guided this project. The purpose was
 to learn and understand the limitations of chibi-scheme's FFI
-interface. While relatively simple, it's FFI requires a stub file, and
-compiliation. Additionally it does not support function pointers. (Had
-it, this library would have included other bindings to libsoc
-functions.)
+interface.  Although relatively simple with relatively decent
+documentation, its FFI requires a stub file, and compiliation.
+Additionally it does not support function pointers. (Had it done so,
+this library would have included other bindings to libsoc functions.)
 
 ## Install
 
 ### Prerequisites
 * [chibi-scheme](http://synthcode.com/scheme/chibi/)
 * [libsoc](https://github.com/jackmitch/libsoc) (If you're using a
-  debian based distribution, please install the dev package as well as
+  debian-based distribution, please install the dev package as well as
   the libsoc package.)
 * make
 
@@ -90,7 +90,7 @@ In the `(imports ...)` form, add the following `(libsoc gpio)`
 
 ## Example
 An example ships with the source code. The example must run
-as root since libsoc needs to make calls to the gpio sysfs interface.
+as root since libsoc needs echo strings to the gpio sysfs interface.
 
 `sudo chibi-scheme example.scm`
 
@@ -104,5 +104,5 @@ https://github.com/neomantic/chibi-libsoc/issues
 
 ## License
 
-Like chibi, chibi-libsoc is licensed under the terms of the 3-clause
+Like chibi-scheme, chibi-libsoc is licensed under the terms of the 3-clause
 BSD license.  Consult the COPYING document for the full license.
